@@ -15,6 +15,18 @@ export default function Navbar({ onOpenJoinModal }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
@@ -30,25 +42,26 @@ export default function Navbar({ onOpenJoinModal }) {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'glass-nav py-3 shadow-2xl shadow-black/50'
-            : 'bg-gradient-to-b from-black/90 via-black/50 to-transparent py-5'
+            ? 'glass-nav py-3 shadow-2xl shadow-black/60'
+            : 'bg-gradient-to-b from-black/90 via-black/50 to-transparent py-4 sm:py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo & Brand Name */}
-          <a href="#hero" className="flex items-center gap-3 group">
-            <div className="relative w-11 h-11 rounded-full p-0.5 bg-gradient-to-br from-brand-red via-brand-gold to-brand-red overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-300">
+          <a href="#hero" className="flex items-center gap-2.5 sm:gap-3 group">
+            <div className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full p-0.5 bg-gradient-to-br from-brand-red via-brand-gold to-brand-red overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-300 shrink-0">
               <img
                 src={images.logo}
                 alt="Grower Fitness Logo"
                 className="w-full h-full object-cover rounded-full bg-black"
+                loading="eager"
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-heading font-extrabold text-xl sm:text-2xl tracking-wider text-white flex items-center gap-1">
+              <span className="font-heading font-extrabold text-lg sm:text-2xl tracking-wider text-white flex items-center gap-1">
                 GROWER <span className="text-brand-red">FITNESS</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium -mt-1">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-400 font-medium -mt-1 hidden xs:block">
                 Trichy • Tamil Nadu
               </span>
             </div>
@@ -68,8 +81,8 @@ export default function Navbar({ onOpenJoinModal }) {
             ))}
           </nav>
 
-          {/* Right Action CTA & Call Button */}
-          <div className="hidden sm:flex items-center gap-4">
+          {/* Desktop Right Action CTA & Call Button */}
+          <div className="hidden md:flex items-center gap-4">
             <a
               href={`tel:${gymData.brand.phoneClean}`}
               className="flex items-center gap-2 text-xs font-semibold text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 px-3.5 py-2.5 rounded-full border border-white/10 transition-all"
@@ -89,20 +102,14 @@ export default function Navbar({ onOpenJoinModal }) {
             </button>
           </div>
 
-          {/* Mobile Hamburger Toggle Button */}
-          <div className="flex sm:hidden items-center gap-3">
-            <button
-              onClick={onOpenJoinModal}
-              className="bg-brand-red text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider"
-            >
-              JOIN
-            </button>
+          {/* Mobile Hamburger Toggle Button (Clean Logo | Hamburger design) */}
+          <div className="flex md:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-white/5 text-gray-200 hover:text-white border border-white/10 focus:outline-none"
+              className="p-2.5 rounded-xl bg-white/5 text-gray-200 hover:text-white border border-white/10 focus:outline-none active:scale-95 transition-transform"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-brand-red" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -110,40 +117,43 @@ export default function Navbar({ onOpenJoinModal }) {
 
       {/* Mobile Menu Slide-Over Drawer */}
       <div
-        className={`fixed inset-0 z-40 bg-black/80 backdrop-blur-md transition-opacity duration-300 sm:hidden ${
+        className={`fixed inset-0 z-40 bg-black/80 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setMobileMenuOpen(false)}
       >
         <div
-          className={`fixed top-0 right-0 bottom-0 w-[80%] max-w-sm bg-brand-dark border-l border-white/10 p-6 flex flex-col justify-between transition-transform duration-300 ${
+          className={`fixed top-0 right-0 bottom-0 w-[85%] max-w-xs bg-brand-dark border-l border-white/10 p-6 flex flex-col justify-between transition-transform duration-300 h-[100dvh] overflow-y-auto ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           onClick={(e) => e.stopPropagation()}
         >
           <div>
-            <div className="flex items-center justify-between pb-6 border-b border-white/10">
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between pb-5 border-b border-white/10">
               <div className="flex items-center gap-3">
-                <img src={images.logo} alt="Logo" className="w-9 h-9 rounded-full" />
-                <span className="font-heading font-bold text-lg text-white">
+                <img src={images.logo} alt="Logo" className="w-8 h-8 rounded-full" />
+                <span className="font-heading font-bold text-base text-white">
                   GROWER <span className="text-brand-red">FITNESS</span>
                 </span>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2 text-gray-400 hover:text-white"
+                className="p-2 rounded-lg text-gray-400 hover:text-white active:scale-95"
+                aria-label="Close menu"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <nav className="flex flex-col gap-4 mt-8">
+            {/* Nav Items */}
+            <nav className="flex flex-col gap-1 mt-6">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between text-base font-medium text-gray-200 hover:text-brand-red py-2 border-b border-white/5"
+                  className="flex items-center justify-between text-base font-semibold text-gray-200 hover:text-brand-red py-3 px-2 rounded-lg hover:bg-white/5 transition-all border-b border-white/5"
                 >
                   <span>{link.name}</span>
                   <ChevronRight className="w-4 h-4 text-gray-500" />
@@ -152,10 +162,11 @@ export default function Navbar({ onOpenJoinModal }) {
             </nav>
           </div>
 
-          <div className="flex flex-col gap-3 pt-6 border-t border-white/10">
+          {/* Drawer Footer Actions */}
+          <div className="flex flex-col gap-3 pt-6 border-t border-white/10 mt-6">
             <a
               href={`tel:${gymData.brand.phoneClean}`}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold text-white"
+              className="w-full min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold text-white active:scale-95 transition-transform"
             >
               <Phone className="w-4 h-4 text-brand-red" />
               <span>{gymData.brand.phone}</span>
@@ -165,9 +176,10 @@ export default function Navbar({ onOpenJoinModal }) {
                 setMobileMenuOpen(false);
                 onOpenJoinModal();
               }}
-              className="w-full py-3.5 rounded-xl bg-brand-red text-white font-bold text-sm uppercase tracking-wider shadow-lg shadow-brand-red/30"
+              className="w-full min-h-[48px] rounded-xl bg-brand-red text-white font-bold text-sm uppercase tracking-wider shadow-lg shadow-brand-red/30 active:scale-95 transition-transform flex items-center justify-center gap-2"
             >
-              JOIN NOW
+              <Dumbbell className="w-4 h-4" />
+              <span>JOIN NOW</span>
             </button>
           </div>
         </div>

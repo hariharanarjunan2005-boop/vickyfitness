@@ -17,25 +17,26 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-black border-t border-white/10 pt-16 pb-12 text-gray-400 relative">
+    <footer className="bg-black border-t border-white/10 pt-12 sm:pt-16 pb-10 sm:pb-12 text-gray-400 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-white/10">
+        {/* Compact Mobile Stack (Logo -> Description -> Quick Links -> Contact -> Instagram) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-16 border-b border-white/10">
           
           {/* Brand Col */}
           <div className="lg:col-span-4 flex flex-col items-start">
-            <a href="#hero" className="flex items-center gap-3 mb-4">
-              <img src={images.logo} alt="Grower Fitness Logo" className="w-12 h-12 rounded-full border border-white/10" />
+            <a href="#hero" className="flex items-center gap-3 mb-3">
+              <img src={images.logo} alt="Grower Fitness Logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/10" loading="lazy" />
               <div className="flex flex-col">
-                <span className="font-heading font-black text-2xl text-white tracking-wider">
+                <span className="font-heading font-black text-xl sm:text-2xl text-white tracking-wider">
                   GROWER <span className="text-brand-red">FITNESS</span>
                 </span>
-                <span className="text-[10px] uppercase tracking-widest text-gray-400 font-semibold -mt-1">
+                <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-gray-400 font-semibold -mt-0.5">
                   Premium Gym in Trichy
                 </span>
               </div>
             </a>
-            <p className="text-xs text-gray-400 leading-relaxed mb-6 max-w-sm">
+            <p className="text-xs text-gray-400 leading-relaxed mb-4 max-w-sm">
               Trichy's premier fitness destination focused on raw strength training, progressive conditioning, and dedicated physique building.
             </p>
             <div className="flex items-center gap-3">
@@ -60,40 +61,40 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="lg:col-span-3">
-            <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4 border-b border-white/10 pb-2">
+            <h4 className="font-heading font-bold text-white text-xs sm:text-sm uppercase tracking-wider mb-3 border-b border-white/10 pb-2">
               Quick Links
             </h4>
-            <ul className="space-y-2.5 text-xs font-medium">
+            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-2 text-xs font-medium">
               <li>
-                <a href="#hero" className="hover:text-brand-red transition-colors">Home</a>
+                <a href="#hero" className="hover:text-brand-red transition-colors py-1 block">Home</a>
               </li>
               <li>
-                <a href="#about" className="hover:text-brand-red transition-colors">About Grower Fitness</a>
+                <a href="#about" className="hover:text-brand-red transition-colors py-1 block">About</a>
               </li>
               <li>
-                <a href="#programs" className="hover:text-brand-red transition-colors">Training Programs</a>
+                <a href="#programs" className="hover:text-brand-red transition-colors py-1 block">Programs</a>
               </li>
               <li>
-                <a href="#facilities" className="hover:text-brand-red transition-colors">Gym Facilities</a>
+                <a href="#facilities" className="hover:text-brand-red transition-colors py-1 block">Facilities</a>
               </li>
               <li>
-                <a href="#gallery" className="hover:text-brand-red transition-colors">Photo Gallery</a>
+                <a href="#gallery" className="hover:text-brand-red transition-colors py-1 block">Gallery</a>
               </li>
               <li>
-                <a href="#reviews" className="hover:text-brand-red transition-colors">Member Reviews</a>
+                <a href="#reviews" className="hover:text-brand-red transition-colors py-1 block">Reviews</a>
               </li>
               <li>
-                <a href="#location" className="hover:text-brand-red transition-colors">Contact & Location</a>
+                <a href="#location" className="hover:text-brand-red transition-colors py-1 block">Contact</a>
               </li>
             </ul>
           </div>
 
-          {/* Contact Details */}
+          {/* Contact Details & Instagram */}
           <div className="lg:col-span-5">
-            <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4 border-b border-white/10 pb-2">
+            <h4 className="font-heading font-bold text-white text-xs sm:text-sm uppercase tracking-wider mb-3 border-b border-white/10 pb-2">
               Contact & Location
             </h4>
-            <div className="space-y-3.5 text-xs">
+            <div className="space-y-3 text-xs">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-brand-red shrink-0 mt-0.5" />
                 <span className="text-gray-300 leading-relaxed">
@@ -118,14 +119,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-gray-500">
           <div>
             © {new Date().getFullYear()} Grower Fitness Gym, Trichy. All Rights Reserved.
           </div>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors min-h-[44px] px-3 active:scale-95"
           >
             <span>BACK TO TOP</span>
             <ChevronUp className="w-4 h-4 text-brand-red" />
